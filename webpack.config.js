@@ -9,6 +9,7 @@ module.exports = {
     filename: '[name].build.js',
     clean: true,
   },
+  stats: 'errors-only',
   mode: process.env.NODE_ENV || 'development',
   optimization: {
     runtimeChunk: 'single',
@@ -19,7 +20,8 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, '/app'),
-    compress: true,
+
+    overlay: true,
     port: 7001,
     hot: true,
   },
@@ -31,7 +33,7 @@ module.exports = {
         use: ['babel-loader'],
       },
       {
-        test: /\.(css|scss)$/,
+        test: /\.(s?scss)$/,
         use: ['style-loader', 'css-loader'],
       },
       {

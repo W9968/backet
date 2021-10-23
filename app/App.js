@@ -1,5 +1,5 @@
 import React from 'react'
 
 export default function App() {
-  return <div>kiss my ass</div>
+  return <h1>Backet</h1>
 }
