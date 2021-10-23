@@ -3,7 +3,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin')
 const CaseSensitivePathsWebpackPlugin = require('case-sensitive-paths-webpack-plugin')
 
 module.exports = {
-  entry: './app/_index.js',
+  entry: './app/index.js',
 
   output: {
     path: path.join(__dirname, '/.bundle'),
