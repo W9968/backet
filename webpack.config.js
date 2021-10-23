@@ -3,58 +3,47 @@ const HtmlWebPackPlugin = require('html-webpack-plugin')
 const CaseSensitivePathsWebpackPlugin = require('case-sensitive-paths-webpack-plugin')
 
 module.exports = {
-  entry: './app/index.js',
-
+  entry: path.join(__dirname, 'app', 'index.js'),
   output: {
-    path: path.join(__dirname, '/.bundle'),
-    filename: '[name].[contenthash].js',
+    path: path.join(__dirname, 'build'),
+    filename: '[name].build.js',
     clean: true,
   },
-
+  mode: process.env.NODE_ENV || 'development',
   optimization: {
     runtimeChunk: 'single',
   },
-
   resolve: {
     alias: {},
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
   },
-
   devServer: {
-    contentBase: path.join(__dirname, '/.bundle'),
+    contentBase: path.join(__dirname, '/app'),
     compress: true,
     port: 7001,
     hot: true,
   },
-
   module: {
     rules: [
       {
-        test: /\.js?x$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        resolve: {
-          extensions: ['.js', '.jsx'],
-        },
-        use: {
-          loader: 'babel-loader',
-        },
+        use: ['babel-loader'],
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
-        use: {
-          loader: 'file-loader',
-        },
+        test: /\.(css|scss)$/,
+        use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.s?css$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
+        use: ['file-loader'],
       },
     ],
   },
 
   plugins: [
     new HtmlWebPackPlugin({
-      title: 'Backet',
-      template: './static/index.html',
+      template: path.join(__dirname, 'base', 'index.html'),
     }),
     new CaseSensitivePathsWebpackPlugin(),
   ],
